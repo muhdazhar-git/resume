@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume | Muhammad Azhar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a single-page scrolling experience with a fixed navigation bar for quick access to key sections: Overview, Experience, and Skills. This non-linear navigation is more user-friendly than a traditional document, allowing recruiters to instantly jump to the information they value most. The structure progresses from a high-level summary (Overview), to detailed career history (Experience), to a visual breakdown of capabilities (Skills), creating a logical and compelling narrative of professional qualifications. -->
+    <!-- Visualization & Content Choices: 
+        - Overview Section: Goal: Inform/Introduce. Method: A two-column layout with a professional portrait and key summary text. Interaction: N/A. Justification: Provides a strong, immediate first impression.
+        - Experience Section: Goal: Organize/Detail. Method: An interactive vertical timeline implemented with HTML/CSS/JS. Interaction: Clicking on a job title expands a card to reveal details. Justification: More visually engaging and organized than a simple list, allowing users to control the level of detail they see.
+        - Skills Section: Goal: Compare/Inform. Method: A Radar Chart from Chart.js to visualize proficiency across core competencies, supplemented by a categorized grid of specific technologies. Interaction: Chart tooltips on hover provide context. Justification: The chart offers a quick, high-impact summary of strengths, while the grid provides necessary detail. Library: Chart.js.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFDFD;
+            color: #1a202c;
+        }
+        .timeline-item .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .timeline-item.open .details {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-gray-800">Muhammad Azhar</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Overview</a>
+                        <a href="#experience" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
+                        <a href="#skills" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="overview" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <div class="w-full md:w-1/3 flex justify-center">
+                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://muhdazharblog-gaedr.wordpress.com/wp-content/uploads/2025/09/resume-9.jpeg" alt="A professional portrait of Muhammad Azhar.">
+                    </div>
+                    <div class="w-full md:w-2/3 text-center md:text-left">
+                        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Muhammad Azhar</h1>
+                        <p class="mt-2 text-xl md:text-2xl text-gray-600">Network & Server Administration Specialist</p>
+                        <p class="mt-4 text-lg text-gray-700 max-w-2xl mx-auto md:mx-0">
+                            Highly skilled in network management, server administration, and cybersecurity. Expert in Windows and Linux OS, virtualization, and cloud computing. Proficient in scripting and automation to ensure optimal system performance and security.
+                        </p>
+                        <div class="mt-6 flex gap-4 justify-center md:justify-start">
+                            <a href="mailto:muhdazhar@example.com" class="inline-block bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-700 transition-colors">Email Me</a>
+                            <a href="#" class="inline-block bg-white text-gray-800 font-semibold px-6 py-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-100 transition-colors">Download CV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-16 md:py-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Career Journey</h2>
+                <div class="relative">
+                    <div class="absolute left-1/2 -ml-0.5 w-1 bg-gray-200 h-full"></div>
+                    <div id="timeline-container" class="space-y-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">Technical Proficiencies</h2>
+                 <p class="text-center text-lg text-gray-600 mb-12">A visual representation of core competencies and a detailed list of technologies.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="font-bold text-xl text-gray-800 mb-3">Networking & Security</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Cisco</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Juniper</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Firewalls</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">SIEM</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-gray-800 mb-3">Systems & Platforms</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Windows Server</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Linux</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">VMware</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Docker</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">AWS</span>
+                                <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Azure</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-gray-800 mb-3">Education</h3>
+                            <div class="space-y-6">
+                                <div class="bg-gray-100 p-4 rounded-lg">
+                                    <p class="font-bold text-gray-900">Bachelor's Degree, Computer Science</p>
+                                    <p class="text-gray-700">Universiti Teknologi Malaysia (Aug 2014 - Aug 2018)</p>
+                                    <ul class="list-disc list-inside text-gray-600 mt-2 text-sm space-y-1">
+                                        <li>Completed a four-year Bachelor of Computer Science program (Graphics and Multimedia Software).</li>
+                                        <li>Specialized in software, system, and games development.</li>
+                                        <li>Proficient in programming languages: C#, C++, Java, and PHP.</li>
+                                        <li>Thesis: Developed a 'Real Object Tracking with Speech Enabled in AR Handheld Application'.</li>
+                                        <li>Facilitated the Faculty of Computing's 'Future of ICT Camp'.</li>
+                                        <li>President of UTM-Computer Graphics and Multimedia Association (CGMA).</li>
+                                        <li>Winner of UTM Cloud MARVEL Hackathon 2017 (Category: 3D Animation).</li>
+                                        <li>Served as an Assistant Trainer for 'Level Up @Schools x UTM'.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-100 p-4 rounded-lg">
+                                    <p class="font-bold text-gray-900">Matriculation, Computer Science</p>
+                                    <p class="text-gray-700">Kolej Matrikulasi Johor (KMJ) (Jan 2013 - Jan 2014)</p>
+                                    <ul class="list-disc list-inside text-gray-600 mt-2 text-sm space-y-1">
+                                        <li>Completed a one-year program focused on Science (Mathematics, Biology, Chemistry) and Computer Science.</li>
+                                        <li>Served as a Committee Member of the Computer Science Society of Johor Matriculation College.</li>
+                                        <li>Achieved first runner-up in the Theater Competition of Johor Matriculation College.</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-100 p-4 rounded-lg">
+                                    <p class="font-bold text-gray-900">PMR, SPM</p>
+                                    <p class="text-gray-700">SMK Sultan Alauddin Riayat Shah 1 (Jan 2008 - Dec 2012)</p>
+                                    <ul class="list-disc list-inside text-gray-600 mt-2 text-sm space-y-1">
+                                        <li>Completed the Sijil Pelajaran Malaysia (SPM) from Form 1 to Form 5.</li>
+                                        <li>Participated in the '1 Malaysian Program' by the Ministry of Education Malaysia.</li>
+                                        <li>Served as Chairman for the Arabic Language Association.</li>
+                                        <li>Awarded the PMR Academic Excellence Award.</li>
+                                        <li>Received the 'Best Male Academic and Leadership Student Award'.</li>
+                                        <li>Achieved second runner-up for the NILAM Figure Award of Muar and Ledang (Rural Area Category).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2025 Muhammad Azhar. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillsData = {
+                labels: ['Network Management', 'Cybersecurity', 'Server Administration', 'Cloud Platforms', 'Virtualization', 'Automation'],
+                datasets: [{
+                    label: 'Proficiency Level',
+                    data: [90, 85, 95, 80, 88, 75],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                }]
+            };
+
+            const chartConfig = {
+                type: 'radar',
+                data: skillsData,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: "'Inter', sans-serif"
+                                },
+                                color: '#1a202c'
+                            },
+                            ticks: {
+                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                stepSize: 20
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            };
+            
+            const skillsChartCtx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(skillsChartCtx, chartConfig);
+
+            const experienceData = [
+                {
+                    role: 'System Administrator',
+                    company: 'Ren Innovation Sdn Bhd',
+                    period: 'Jul 2024 - Present',
+                    details: [
+                        'Managed and maintained Windows server infrastructure, ensuring optimal system performance, security, and availability.',
+                        'Administered Active Directory, DNS, DHCP, Group Policy, and user access control across domain-connected environments.',
+                        'Performed regular system updates, patch management, and backup & recovery using tools like Azure Backup and Site Recovery.',
+                        'Deployed and supported virtual machines and services in Microsoft Azure, including load balancing, SSL configuration, and resource monitoring.',
+                        'Monitored server health, resolved incidents, and implemented automation scripts to streamline routine tasks and improve system efficiency.',
+                        'Supported SaaS infrastructure operations, collaborating with cross-functional teams to ensure secure handling of customer data in line with ISO 27001:2022 standards.',
+                        'Led the migration of legacy systems (e.g., Windows Server 2012 R2) to supported platforms to maintain compliance and system integrity.',
+                        'Participated in internal audits, change management, and documentation of system configurations, procedures, and incident response activities.',
+                        'Assisted in maintaining security baselines, endpoint protection, and audit log reviews to detect anomalies and enforce policies.'
+                    ]
+                },
+                {
+                    role: 'Information Technology Engineer',
+                    company: 'Ren Innovation Sdn Bhd',
+                    period: 'Jun 2022 - Jul 2024',
+                    details: [
+                        'Administered and maintained Windows Server environments, Active Directory, DNS, DHCP, and Group Policy.',
+                        'Deployed and managed virtual machines and resources within Microsoft Azure, ensuring cost-efficiency, performance, and security.',
+                        'Implemented and monitored backup, disaster recovery, and high availability strategies across critical systems.',
+                        'Supported and troubleshot SaaS platform operations, ensuring compliance with ISO 27001:2022 security standards.',
+                        'Managed internal network infrastructure, firewalls, VPNs, and endpoint security solutions.',
+                        'Automated recurring tasks using PowerShell and batch scripting to improve operational efficiency.',
+                        'Collaborated with software development and customer support teams to resolve system-related issues and service requests.',
+                        'Participated in quarterly IT audits, vulnerability assessments, and corrective action implementations.',
+                        'Contributed to IT policies, technical documentation, and user training programs.'
+                    ]
+                },
+                {
+                    role: 'Information Technology Engineer',
+                    company: 'Visual Solutions (M) Sdn Bhd',
+                    period: 'Apr 2020 - Jun 2022',
+                    details: [
+                        'Administered and maintained Windows Server environments, Active Directory, DNS, DHCP, and Group Policy.',
+                        'Deployed and managed virtual machines and resources within Microsoft Azure, ensuring cost-efficiency, performance, and security.',
+                        'Implemented and monitored backup, disaster recovery, and high availability strategies across critical systems.',
+                        'Supported and troubleshot SaaS platform operations, ensuring compliance with ISO 27001:2022 security standards.',
+                        'Managed internal network infrastructure, firewalls, VPNs, and endpoint security solutions.',
+                        'Automated recurring tasks using PowerShell and batch scripting to improve operational efficiency.',
+                        'Collaborated with software development and customer support teams to resolve system-related issues and service requests.',
+                        'Participated in quarterly IT audits, vulnerability assessments, and corrective action implementations.',
+                        'Contributed to IT policies, technical documentation, and user training programs.'
+                    ]
+                },
+                {
+                    role: 'Project Analyst',
+                    company: 'Visual Solutions (M) Sdn Bhd',
+                    period: 'Jan 2020 - Apr 2020',
+                    details: [
+                        'Assisted in defining project scope, objectives, and deliverables in collaboration with stakeholders.',
+                        'Developed and maintained project documentation, including project plans, schedules, and reports.',
+                        'Tracked project performance using appropriate tools and techniques to analyze successful completion of goals.',
+                        'Identified project risks and issues, and assisted in developing mitigation strategies.',
+                        'Conducted data analysis to support decision-making and resource planning.',
+                        'Coordinated meetings, prepared meeting agendas, and documented action items.',
+                        'Supported budgeting, forecasting, and financial tracking of project expenses.',
+                        'Ensured compliance with internal policies, standards, and procedures.'
+                    ]
+                },
+                {
+                    role: 'Technical Support Engineer',
+                    company: 'Aegis BPO Malaysia Sdn Bhd',
+                    period: 'Jan 2019 - Jan 2020',
+                    details: [
+                        'Provided continuous technical support via telephone and email.',
+                        'Utilized strong interpersonal and communication skills to resolve customer frustrations.',
+                        'Assessed customer technical knowledge to tailor communications and solve problems effectively.',
+                        'Conducted basic probing to determine the next action for software-related inquiries.'
+                    ]
+                },
+                {
+                    role: 'Freelance',
+                    company: 'Self-employed',
+                    period: 'Jan 2017 - Jan 2019',
+                    details: [
+                        'Provided freelance services in graphic design, 3D modeling, Augmented Reality (AR) training, and Wordpress website editing.',
+                        'Promoted services and showcased portfolio on relevant platforms.',
+                        'Met with clients to discuss business opportunities, ideas, and profit.',
+                        'Ensured compliance with client requests as per contract to reach a final agreement.'
+                    ]
+                },
+                {
+                    role: 'Intern',
+                    company: 'MaGICX Sdn Bhd',
+                    period: 'Jun 2017 - Jan 2018',
+                    details: [
+                        'Generated new ideas to promote the company using IT-related approaches.',
+                        'Collaborated with the team, staff, and CEO to develop and prototype ideas.',
+                        'Showcased prototypes at public events and company visits.',
+                        'Documented each prototype for future reference.',
+                        'Prepared and submitted a comprehensive internship report.'
+                    ]
+                },
+                {
+                    role: 'Sales Staff',
+                    company: 'PHP Holding Sdn Bhd',
+                    period: 'May 2014 - Aug 2014',
+                    details: [
+                        'Engaged in the sales of water filters, water dispensers, and drinking water.',
+                        'Introduced and explained company products to the public.',
+                        'Educated customers on the benefits of using higher-quality water for drinking and cooking.',
+                        'Managed customer disputes with care to avoid unnecessary situations.',
+                        'Ensured clients fully understood the product, benefits, and contract terms.',
+                        'Installed products at customer premises, performing basic piping, routing, and drilling.'
+                    ]
+                },
+                {
+                    role: 'Production Operator',
+                    company: 'Tatawa Industries Sdn Bhd',
+                    period: 'Jan 2013 - Mar 2013',
+                    details: [
+                        'Assisted with the packaging and management of company products.',
+                        'Delivered products to the relevant department.',
+                        'Followed the production schedule and adhered to QC instructions.'
+                    ]
+                }
+            ];
+
+            const timelineContainer = document.getElementById('timeline-container');
+            experienceData.forEach((job, index) => {
+                const item = document.createElement('div');
+                item.className = `timeline-item relative group cursor-pointer`;
+                const sideClass = index % 2 === 0 ? 'md:ml-auto md:pl-16' : 'md:mr-auto md:pr-16';
+                const dotSideClass = index % 2 === 0 ? 'md:left-1/2 md:-ml-2' : 'md:left-1/2 md:-ml-2';
+
+                item.innerHTML = `
+                    <div class="absolute w-4 h-4 bg-gray-800 rounded-full mt-3 top-0 left-1/2 -ml-2 transition-transform duration-300 group-hover:scale-125"></div>
+                    <div class="relative w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md border border-gray-200 ${sideClass}">
+                        <span class="text-sm font-semibold text-gray-500">${job.period}</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-1">${job.role}</h3>
+                        <p class="text-md text-gray-700">${job.company}</p>
+                        <div class="details mt-4">
+                            <ul class="space-y-2 list-disc list-inside text-gray-600">
+                                ${job.details.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.appendChild(item);
+            });
+
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
