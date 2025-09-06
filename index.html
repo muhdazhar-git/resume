@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Chosen Palette: Modern and professional with a touch of blue -->
     <!-- Application Structure Plan: The application is structured as a single-page scrolling experience with a fixed navigation bar for quick access to key sections: Overview, Experience, and Skills. This non-linear navigation is more user-friendly than a traditional document, allowing recruiters to instantly jump to the information they value most. The structure progresses from a high-level summary (Overview), to detailed career history (Experience), to a visual breakdown of capabilities (Skills), creating a logical and compelling narrative of professional qualifications. -->
     <!-- Visualization & Content Choices: 
         - Overview Section: Goal: Inform/Introduce. Method: A two-column layout with a professional portrait and key summary text. Interaction: N/A. Justification: Provides a strong, immediate first impression.
@@ -19,7 +19,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFDFD;
+            background-color: #F7F7F7;
             color: #1a202c;
         }
         .details {
@@ -45,6 +45,35 @@
                 height: 400px;
             }
         }
+        .timeline-item {
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #E2E8F0;
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
+        .timeline-item:last-child::before {
+            height: calc(100% - 2rem);
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.5rem;
+            width: 16px;
+            height: 16px;
+            background-color: #3B82F6;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid white;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -60,6 +89,7 @@
                         <a href="#overview" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Overview</a>
                         <a href="#experience" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
                         <a href="#skills" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#education" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Education</a>
                     </div>
                 </div>
             </div>
@@ -71,7 +101,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                     <div class="w-full md:w-1/3 flex justify-center">
-                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://muhdazharblog-gaedr.wordpress.com/wp-content/uploads/2025/09/resume-9.jpeg" alt="A professional portrait of Muhammad Azhar.">
+                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://placehold.co/400x400/3B82F6/FFFFFF?text=MA" alt="A professional portrait of Muhammad Azhar.">
                     </div>
                     <div class="w-full md:w-2/3 text-center md:text-left">
                         <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Muhammad Azhar</h1>
@@ -80,7 +110,7 @@
                             Highly skilled in network management, server administration, and cybersecurity. Expert in Windows and Linux OS, virtualization, and cloud computing. Proficient in scripting and automation to ensure optimal system performance and security.
                         </p>
                         <div class="mt-6 flex gap-4 justify-center md:justify-start">
-                            <a href="mailto:muhdazhar@example.com" class="inline-block bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-700 transition-colors">Email Me</a>
+                            <a href="mailto:muhdazhar@example.com" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-colors">Email Me</a>
                             <a href="#" class="inline-block bg-white text-gray-800 font-semibold px-6 py-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-100 transition-colors">Download CV</a>
                         </div>
                     </div>
@@ -91,9 +121,8 @@
         <section id="experience" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Career Journey</h2>
-                <div class="relative flex overflow-x-auto pb-6 space-x-8 md:space-x-12 scrollbar-hide">
-                    <div id="timeline-container" class="flex">
-                    </div>
+                <div id="timeline-container" class="space-y-8 md:space-y-12 relative pl-8 md:pl-16">
+                    <!-- Timeline items will be injected here by JavaScript -->
                 </div>
             </div>
         </section>
@@ -127,46 +156,49 @@
                                 <span class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Azure</span>
                             </div>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl text-gray-800 mb-3">Education</h3>
-                            <div class="space-y-6">
-                                <div class="bg-gray-100 p-4 rounded-lg">
-                                    <p class="font-bold text-gray-900">Bachelor's Degree, Computer Science</p>
-                                    <p class="text-gray-700">Universiti Teknologi Malaysia (Aug 2014 - Aug 2018)</p>
-                                    <ul class="list-disc list-inside text-gray-600 mt-2 text-sm space-y-1">
-                                        <li>Completed a four-year Bachelor of Computer Science program (Graphics and Multimedia Software).</li>
-                                        <li>Specialized in software, system, and games development.</li>
-                                        <li>Proficient in programming languages: C#, C++, Java, and PHP.</li>
-                                        <li>Thesis: Developed a 'Real Object Tracking with Speech Enabled in AR Handheld Application'.</li>
-                                        <li>Facilitated the Faculty of Computing's 'Future of ICT Camp'.</li>
-                                        <li>President of UTM-Computer Graphics and Multimedia Association (CGMA).</li>
-                                        <li>Winner of UTM Cloud MARVEL Hackathon 2017 (Category: 3D Animation).</li>
-                                        <li>Served as an Assistant Trainer for 'Level Up @Schools x UTM'.</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-gray-100 p-4 rounded-lg">
-                                    <p class="font-bold text-gray-900">Matriculation, Computer Science</p>
-                                    <p class="text-gray-700">Kolej Matrikulasi Johor (KMJ) (Jan 2013 - Jan 2014)</p>
-                                    <ul class="list-disc list-inside text-gray-600 mt-2 text-sm space-y-1">
-                                        <li>Completed a one-year program focused on Science (Mathematics, Biology, Chemistry) and Computer Science.</li>
-                                        <li>Served as a Committee Member of the Computer Science Society of Johor Matriculation College.</li>
-                                        <li>Achieved first runner-up in the Theater Competition of Johor Matriculation College.</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-gray-100 p-4 rounded-lg">
-                                    <p class="font-bold text-gray-900">PMR, SPM</p>
-                                    <p class="text-gray-700">SMK Sultan Alauddin Riayat Shah 1 (Jan 2008 - Dec 2012)</p>
-                                    <ul class="list-disc list-inside text-gray-600 mt-2 text-sm space-y-1">
-                                        <li>Completed the Sijil Pelajaran Malaysia (SPM) from Form 1 to Form 5.</li>
-                                        <li>Participated in the '1 Malaysian Program' by the Ministry of Education Malaysia.</li>
-                                        <li>Served as Chairman for the Arabic Language Association.</li>
-                                        <li>Awarded the PMR Academic Excellence Award.</li>
-                                        <li>Received the 'Best Male Academic and Leadership Student Award'.</li>
-                                        <li>Achieved second runner-up for the NILAM Figure Award of Muar and Ledang (Rural Area Category).</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Education</h2>
+                <div class="space-y-6 max-w-4xl mx-auto">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200">
+                        <p class="font-bold text-gray-900">Bachelor's Degree, Computer Science</p>
+                        <p class="text-gray-700 mt-1">Universiti Teknologi Malaysia (Aug 2014 - Aug 2018)</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-4 text-sm space-y-2">
+                            <li>Completed a four-year Bachelor of Computer Science program (Graphics and Multimedia Software).</li>
+                            <li>Specialized in software, system, and games development.</li>
+                            <li>Proficient in programming languages: C#, C++, Java, and PHP.</li>
+                            <li>Thesis: Developed a 'Real Object Tracking with Speech Enabled in AR Handheld Application'.</li>
+                            <li>Facilitated the Faculty of Computing's 'Future of ICT Camp'.</li>
+                            <li>President of UTM-Computer Graphics and Multimedia Association (CGMA).</li>
+                            <li>Winner of UTM Cloud MARVEL Hackathon 2017 (Category: 3D Animation).</li>
+                            <li>Served as an Assistant Trainer for 'Level Up @Schools x UTM'.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200">
+                        <p class="font-bold text-gray-900">Matriculation, Computer Science</p>
+                        <p class="text-gray-700 mt-1">Kolej Matrikulasi Johor (KMJ) (Jan 2013 - Jan 2014)</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-4 text-sm space-y-2">
+                            <li>Completed a one-year program focused on Science (Mathematics, Biology, Chemistry) and Computer Science.</li>
+                            <li>Served as a Committee Member of the Computer Science Society of Johor Matriculation College.</li>
+                            <li>Achieved first runner-up in the Theater Competition of Johor Matriculation College.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200">
+                        <p class="font-bold text-gray-900">PMR, SPM</p>
+                        <p class="text-gray-700 mt-1">SMK Sultan Alauddin Riayat Shah 1 (Jan 2008 - Dec 2012)</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-4 text-sm space-y-2">
+                            <li>Completed the Sijil Pelajaran Malaysia (SPM) from Form 1 to Form 5.</li>
+                            <li>Participated in the '1 Malaysian Program' by the Ministry of Education Malaysia.</li>
+                            <li>Served as Chairman for the Arabic Language Association.</li>
+                            <li>Awarded the PMR Academic Excellence Award.</li>
+                            <li>Received the 'Best Male Academic and Leadership Student Award'.</li>
+                            <li>Achieved second runner-up for the NILAM Figure Award of Muar and Ledang (Rural Area Category).</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -361,7 +393,7 @@
             const timelineContainer = document.getElementById('timeline-container');
             experienceData.forEach((job, index) => {
                 const item = document.createElement('div');
-                item.className = `timeline-item flex-shrink-0 min-w-[300px] sm:min-w-[350px] relative text-center group cursor-pointer p-6 rounded-lg shadow-md border border-gray-200 bg-white hover:border-gray-300 transition-all duration-300`;
+                item.className = `timeline-item cursor-pointer p-6 rounded-lg shadow-md border border-gray-200 bg-white hover:border-gray-300 transition-all duration-300`;
 
                 item.innerHTML = `
                     <div class="relative">
