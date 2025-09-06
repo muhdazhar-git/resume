@@ -10,12 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: #A67C80, #B989D9, #827CA6, #727273, #F2F2F2 -->
-    <!-- Application Structure Plan: The application is structured as a single-page scrolling experience with a fixed navigation bar for quick access to key sections: Overview, Experience, and Skills. This non-linear navigation is more user-friendly than a traditional document, allowing recruiters to instantly jump to the information they value most. The structure progresses from a high-level summary (Overview), to detailed career history (Experience), to a visual breakdown of capabilities (Skills), creating a logical and compelling narrative of professional qualifications. -->
-    <!-- Visualization & Content Choices: 
-        - Overview Section: Goal: Inform/Introduce. Method: A two-column layout with a professional portrait and key summary text. Interaction: N/A. Justification: Provides a strong, immediate first impression.
-        - Experience Section: Goal: Organize/Detail. Method: An interactive vertical timeline implemented with HTML/CSS/JS. Interaction: Clicking on a job title expands a card to reveal details. Justification: More visually engaging and organized than a simple list, allowing users to control the level of detail they see.
-        - Skills Section: Goal: Compare/Inform. Method: A Radar Chart from Chart.js to visualize proficiency across core competencies, supplemented by a categorized grid of specific technologies. Interaction: Chart tooltips on hover provide context. Justification: The chart offers a quick, high-impact summary of strengths, while the grid provides necessary detail. Library: Chart.js.
-        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -74,6 +68,23 @@
             transform: translate(-50%, -50%);
             border: 3px solid #F2F2F2;
         }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .parallax-bg {
+            background-image: url('https://placehold.co/1920x1080/A67C80/FFFFFF?text=Background');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -89,6 +100,7 @@
                         <a href="#overview" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Overview</a>
                         <a href="#experience" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
                         <a href="#skills" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#projects" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
                         <a href="#education" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Education</a>
                     </div>
                 </div>
@@ -97,11 +109,11 @@
     </nav>
 
     <main>
-        <section id="overview" class="py-16 md:py-24 bg-white text-gray-900">
+        <section id="overview" class="py-16 md:py-24 bg-white text-gray-900 fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                     <div class="w-full md:w-1/3 flex justify-center">
-                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://raw.githubusercontent.com/muhdazhar-git/profile-assets/refs/heads/main/109ddb11-717e-452f-8809-9a57c3ea6a50.JPG" alt="A professional portrait of Muhammad Azhar.">
+                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://raw.githubusercontent.com/muhdazhar-git/profile-assets/refs/heads/main/109ddb11-717e-452f-8809-9a57c3ea6a50.JPG" alt="A professional portrait of Muhammad Azhar." onerror="this.src='https://placehold.co/256x256/727273/F2F2F2?text=Profile'">
                     </div>
                     <div class="w-full md:w-2/3 text-center md:text-left">
                         <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Muhammad Azhar</h1>
@@ -118,7 +130,7 @@
             </div>
         </section>
 
-        <section id="experience" class="py-16 md:py-24 text-gray-900">
+        <section id="experience" class="py-16 md:py-24 text-gray-900 fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Career Journey</h2>
                 <div id="timeline-container" class="space-y-8 md:space-y-12 relative pl-8 md:pl-16">
@@ -127,10 +139,10 @@
             </div>
         </section>
 
-        <section id="skills" class="py-16 md:py-24 bg-white">
+        <section id="skills" class="py-16 md:py-24 bg-white fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">Technical Proficiencies</h2>
-                 <p class="text-center text-lg text-gray-600 mb-12">A visual representation of core competencies and a detailed list of technologies.</p>
+                <p class="text-center text-lg text-gray-600 mb-12">A visual representation of core competencies and a detailed list of technologies.</p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="chart-container">
                         <canvas id="skillsChart"></canvas>
@@ -161,7 +173,52 @@
             </div>
         </section>
 
-        <section id="education" class="py-16 md:py-24">
+        <!-- New Projects Section -->
+        <section id="projects" class="py-16 md:py-24 text-gray-900 fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Key Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400/827CA6/F2F2F2?text=Project+1" alt="Project image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900">Enterprise Network Redesign</h3>
+                            <p class="mt-2 text-gray-600 text-sm">Led the migration of a legacy network infrastructure to a modern, secure, and scalable multi-cloud environment, resulting in a 30% increase in performance.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">Cisco</span>
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">Juniper</span>
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400/B989D9/F2F2F2?text=Project+2" alt="Project image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900">Automated System Health Monitoring</h3>
+                            <p class="mt-2 text-gray-600 text-sm">Developed and deployed a custom PowerShell and Bash scripting solution for proactive server health monitoring, reducing incident response time by 50%.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">PowerShell</span>
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">Linux</span>
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">Windows Server</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400/727273/F2F2F2?text=Project+3" alt="Project image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900">Cybersecurity Vulnerability Audit</h3>
+                            <p class="mt-2 text-gray-600 text-sm">Conducted a comprehensive audit of the company's IT assets, identifying and patching critical vulnerabilities to achieve ISO 27001 compliance ahead of schedule.</p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">SIEM</span>
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">Firewalls</span>
+                                <span class="bg-[#A67C80] text-white text-xs font-medium px-2 py-1 rounded-full">Security Audit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-16 md:py-24 fade-in">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Education</h2>
                 <div class="space-y-6 max-w-4xl mx-auto">
@@ -415,6 +472,28 @@
                 item.addEventListener('click', () => {
                     item.classList.toggle('open');
                 });
+            });
+
+            // Intersection Observer for fade-in effect
+            const faders = document.querySelectorAll('.fade-in');
+            const appearOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('is-visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
             });
         });
     </script>
