@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Modern and professional with a touch of blue -->
+    <!-- Chosen Palette: #A67C80, #B989D9, #827CA6, #727273, #F2F2F2 -->
     <!-- Application Structure Plan: The application is structured as a single-page scrolling experience with a fixed navigation bar for quick access to key sections: Overview, Experience, and Skills. This non-linear navigation is more user-friendly than a traditional document, allowing recruiters to instantly jump to the information they value most. The structure progresses from a high-level summary (Overview), to detailed career history (Experience), to a visual breakdown of capabilities (Skills), creating a logical and compelling narrative of professional qualifications. -->
     <!-- Visualization & Content Choices: 
         - Overview Section: Goal: Inform/Introduce. Method: A two-column layout with a professional portrait and key summary text. Interaction: N/A. Justification: Provides a strong, immediate first impression.
@@ -19,8 +19,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F7F7F7;
-            color: #1a202c;
+            background-color: #F2F2F2;
+            color: #727273;
         }
         .details {
             max-height: 0;
@@ -55,7 +55,7 @@
             top: 0;
             height: 100%;
             width: 4px;
-            background-color: #E2E8F0;
+            background-color: #827CA6;
             border-radius: 2px;
             transform: translateX(-50%);
         }
@@ -69,10 +69,10 @@
             top: 1.5rem;
             width: 16px;
             height: 16px;
-            background-color: #3B82F6;
+            background-color: #B989D9;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            border: 3px solid white;
+            border: 3px solid #F2F2F2;
         }
     </style>
 </head>
@@ -97,11 +97,11 @@
     </nav>
 
     <main>
-        <section id="overview" class="py-16 md:py-24 bg-white">
+        <section id="overview" class="py-16 md:py-24 bg-white text-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                     <div class="w-full md:w-1/3 flex justify-center">
-                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://placehold.co/400x400/3B82F6/FFFFFF?text=MA" alt="A professional portrait of Muhammad Azhar.">
+                        <img class="h-48 w-48 md:h-64 md:w-64 rounded-full object-cover shadow-lg ring-4 ring-gray-200" src="https://placehold.co/400x400/827CA6/F2F2F2?text=MA" alt="A professional portrait of Muhammad Azhar.">
                     </div>
                     <div class="w-full md:w-2/3 text-center md:text-left">
                         <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Muhammad Azhar</h1>
@@ -110,7 +110,7 @@
                             Highly skilled in network management, server administration, and cybersecurity. Expert in Windows and Linux OS, virtualization, and cloud computing. Proficient in scripting and automation to ensure optimal system performance and security.
                         </p>
                         <div class="mt-6 flex gap-4 justify-center md:justify-start">
-                            <a href="mailto:muhdazhar@example.com" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-colors">Email Me</a>
+                            <a href="mailto:muhdazhar@example.com" class="inline-block bg-[#B989D9] text-gray-900 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-[#A67C80] transition-colors">Email Me</a>
                             <a href="#" class="inline-block bg-white text-gray-800 font-semibold px-6 py-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-100 transition-colors">Download CV</a>
                         </div>
                     </div>
@@ -118,9 +118,9 @@
             </div>
         </section>
 
-        <section id="experience" class="py-16 md:py-24">
+        <section id="experience" class="py-16 md:py-24 text-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Career Journey</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Career Journey</h2>
                 <div id="timeline-container" class="space-y-8 md:space-y-12 relative pl-8 md:pl-16">
                     <!-- Timeline items will be injected here by JavaScript -->
                 </div>
@@ -135,7 +135,7 @@
                     <div class="chart-container">
                         <canvas id="skillsChart"></canvas>
                     </div>
-                    <div class="space-y-8">
+                    <div class="space-y-8 text-gray-900">
                         <div>
                             <h3 class="font-bold text-xl text-gray-800 mb-3">Networking & Security</h3>
                             <div class="flex flex-wrap gap-2">
@@ -165,7 +165,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Education</h2>
                 <div class="space-y-6 max-w-4xl mx-auto">
-                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 text-gray-900">
                         <p class="font-bold text-gray-900">Bachelor's Degree, Computer Science</p>
                         <p class="text-gray-700 mt-1">Universiti Teknologi Malaysia (Aug 2014 - Aug 2018)</p>
                         <ul class="list-disc list-inside text-gray-600 mt-4 text-sm space-y-2">
@@ -179,7 +179,7 @@
                             <li>Served as an Assistant Trainer for 'Level Up @Schools x UTM'.</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 text-gray-900">
                         <p class="font-bold text-gray-900">Matriculation, Computer Science</p>
                         <p class="text-gray-700 mt-1">Kolej Matrikulasi Johor (KMJ) (Jan 2013 - Jan 2014)</p>
                         <ul class="list-disc list-inside text-gray-600 mt-4 text-sm space-y-2">
@@ -188,7 +188,7 @@
                             <li>Achieved first runner-up in the Theater Competition of Johor Matriculation College.</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md border border-gray-200 text-gray-900">
                         <p class="font-bold text-gray-900">PMR, SPM</p>
                         <p class="text-gray-700 mt-1">SMK Sultan Alauddin Riayat Shah 1 (Jan 2008 - Dec 2012)</p>
                         <ul class="list-disc list-inside text-gray-600 mt-4 text-sm space-y-2">
@@ -205,8 +205,8 @@
         </section>
     </main>
 
-    <footer class="bg-gray-800">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+    <footer class="bg-white">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-600">
             <p>&copy; 2025 Muhammad Azhar. All Rights Reserved.</p>
         </div>
     </footer>
@@ -218,13 +218,13 @@
                 datasets: [{
                     label: 'Proficiency Level',
                     data: [90, 85, 95, 80, 88, 75],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(185, 137, 217, 0.2)',
+                    borderColor: 'rgba(185, 137, 217, 1)',
                     borderWidth: 2,
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                    pointBackgroundColor: 'rgba(185, 137, 217, 1)',
+                    pointBorderColor: '#F2F2F2',
+                    pointHoverBackgroundColor: '#F2F2F2',
+                    pointHoverBorderColor: 'rgba(185, 137, 217, 1)'
                 }]
             };
 
@@ -236,20 +236,21 @@
                     scales: {
                         r: {
                             angleLines: {
-                                color: 'rgba(0, 0, 0, 0.1)'
+                                color: 'rgba(114, 114, 115, 0.1)'
                             },
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
+                                color: 'rgba(114, 114, 115, 0.1)'
                             },
                             pointLabels: {
                                 font: {
                                     size: 14,
                                     family: "'Inter', sans-serif"
                                 },
-                                color: '#1a202c'
+                                color: '#727273'
                             },
                             ticks: {
-                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                backdropColor: '#F2F2F2',
+                                color: '#727273',
                                 stepSize: 20
                             },
                             suggestedMin: 0,
@@ -393,7 +394,7 @@
             const timelineContainer = document.getElementById('timeline-container');
             experienceData.forEach((job, index) => {
                 const item = document.createElement('div');
-                item.className = `timeline-item cursor-pointer p-6 rounded-lg shadow-md border border-gray-200 bg-white hover:border-gray-300 transition-all duration-300`;
+                item.className = `timeline-item cursor-pointer p-6 rounded-lg shadow-md border border-gray-200 bg-gray-100 hover:border-[#827CA6] transition-all duration-300`;
 
                 item.innerHTML = `
                     <div class="relative">
