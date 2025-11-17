@@ -122,7 +122,7 @@
                             Results-driven SaaS System Administrator with expertise in managing cloud-based applications and infrastructure. Proficient in user management, security protocols, and providing advanced technical support to ensure seamless system operations. Adept at troubleshooting and resolving complex issues to maximize system uptime and enhance user productivity.
                         </p>
                         <div class="mt-6 flex gap-4 justify-center md:justify-start">
-                            <a href="mailto:muhdazhar.official@gmail.com" class="inline-block bg-[#B989D9] text-gray-900 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-[#A67C80] transition-colors">Email Me</a>
+                            <a id="email-btn-copy" href="mailto:muhdazhar.official@gmail.com" data-email="muhdazhar.official@gmail.com" class="inline-block bg-[#B989D9] text-gray-900 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-[#A67C80] transition-colors">Email Mee</a>
                             <!-- Updated: To make this a download button, you need to set the 'href' to the direct URL of your CV file. -->
                             <!-- Example: href="https://your-domain.com/path/to/your-cv.pdf" -->
                             <!-- The 'download' attribute ensures the browser downloads the file instead of opening it. -->
@@ -306,6 +306,36 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            
+            const emailBtn = document.getElementById('email-btn-copy');
+            const emailAddress = emailBtn ? emailBtn.getAttribute('data-email') : null;
+            
+            if (emailBtn) {
+                emailBtn.addEventListener('click', function(e) {
+                    // Prevent default mailto action, since it's failing
+                    e.preventDefault(); 
+                    
+                    // Use the Clipboard API to copy the email address
+                    navigator.clipboard.writeText(emailAddress).then(() => {
+                        // Success feedback
+                        this.textContent = 'Email Copied!';
+                        this.classList.add('bg-green-500', 'hover:bg-green-600');
+                        this.classList.remove('bg-[#B989D9]', 'hover:bg-[#A67C80]');
+                        
+                        // Reset button after a few seconds
+                        setTimeout(() => {
+                            this.textContent = 'Email Me';
+                            this.classList.remove('bg-green-500', 'hover:bg-green-600');
+                            this.classList.add('bg-[#B989D9]', 'hover:bg-[#A67C80]');
+                        }, 2000);
+                    }).catch(err => {
+                        // Fallback for older browsers (or if clipboard access is denied)
+                        console.error('Failed to copy text: ', err);
+                        alert(`Please manually copy: ${emailAddress}`);
+                    });
+                });
+            }
+            
             const skillsData = {
                 labels: ['Cloud Platforms', 'Operating Systems', 'Scripting & Automation', 'Database Management', 'Security', 'Networking', 'Containerization', 'Monitoring & Logging'],
                 datasets: [{
@@ -509,6 +539,7 @@
     </script>
 </body>
 </html>
+
 
 
 
